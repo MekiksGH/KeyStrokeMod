@@ -24,6 +24,7 @@ public class KeyStrokeMod implements ClientModInitializer {
     public static final String MOD_ID = "keystrokemod";
 
     private static KeyBinding openEditorKey;
+    private static KeyBinding toggleKey;
 
     @Override
     public void onInitializeClient() {
@@ -37,9 +38,16 @@ public class KeyStrokeMod implements ClientModInitializer {
                 GLFW.GLFW_KEY_K,
                 category));
 
+        // A single toggle keybind (unbound by default) that shows/hides the overlay.
+        toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.keystrokemod.toggle",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_UNKNOWN,
+                category));
+
         HudElementRegistry.addLast(Identifier.of(MOD_ID, "keystrokes"), (context, tickCounter) -> {
             MinecraftClient client = MinecraftClient.getInstance();
-            if (client.player == null || client.options.hudHidden) {
+            if (client.player == null || client.options.hudHidden || !KeyStrokeConfig.enabled) {
                 return;
             }
             KeystrokesRenderer.render(context, client.textRenderer,
@@ -50,6 +58,10 @@ public class KeyStrokeMod implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openEditorKey.wasPressed()) {
                 client.setScreen(new KeyStrokeScreen());
+            }
+            while (toggleKey.wasPressed()) {
+                KeyStrokeConfig.enabled = !KeyStrokeConfig.enabled;
+                KeyStrokeConfig.save();
             }
         });
     }

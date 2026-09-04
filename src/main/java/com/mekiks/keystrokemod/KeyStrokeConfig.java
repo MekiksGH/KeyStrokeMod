@@ -24,6 +24,7 @@ public final class KeyStrokeConfig {
     public static float x = 10f;
     public static float y = 10f;
     public static float scale = 1.0f;
+    public static boolean enabled = true;
 
     private KeyStrokeConfig() {
     }
@@ -39,6 +40,7 @@ public final class KeyStrokeConfig {
             x = Float.parseFloat(p.getProperty("x", "10"));
             y = Float.parseFloat(p.getProperty("y", "10"));
             scale = clampScale(Float.parseFloat(p.getProperty("scale", "1.0")));
+            enabled = Boolean.parseBoolean(p.getProperty("enabled", "true"));
         } catch (IOException | NumberFormatException e) {
             // keep defaults on any read/parse error
         }
@@ -49,6 +51,7 @@ public final class KeyStrokeConfig {
         p.setProperty("x", String.valueOf(x));
         p.setProperty("y", String.valueOf(y));
         p.setProperty("scale", String.valueOf(scale));
+        p.setProperty("enabled", String.valueOf(enabled));
         try (OutputStream out = Files.newOutputStream(PATH)) {
             p.store(out, "KeyStrokeMod - overlay position (x,y) and scale");
         } catch (IOException ignored) {
