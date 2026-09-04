@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "keystrokemod",
+  "version": "${version}",
+  "name": "KeyStrokeMod",
+  "description": "A movable, resizable keystrokes overlay (WASD + space + LMB/RMB) that lights up as you press. Bind a key under Controls -> KeyStrokeMod to open the editor.",
+  "authors": [
+    "Mekiks"
+  ],
+  "contact": {
+    "homepage": "https://github.com/MekiksGH/KeyStrokeMod",
+    "sources": "https://github.com/MekiksGH/KeyStrokeMod",
+    "issues": "https://github.com/MekiksGH/KeyStrokeMod/issues"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.mekiks.keystrokemod.KeyStrokeMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
